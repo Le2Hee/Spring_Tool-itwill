@@ -24,7 +24,9 @@ public class BaseTimeEntity {
     // (예) 테이블 careated_time으로 되어 있으면, 클래스에서는 createdTime으로 작성하면 된다.
     
     @CreatedDate // insert될 때의 시간이 자동으로 기록됨.
-    private LocalDateTime createdTime; // 표기법은 카멜표기법을 사용하되 문자열은 SQL 컬럼 이랑 똑같아야 한다.
+    private LocalDateTime createdTime; // 표기법은 카멜표기법(자바관습)을 사용하되 문자열은 SQL 컬럼 이랑 똑같아야 한다.
+                                       // 테이블의 컬럼 이름은 데이터베이스의 관습(snake 표기법)
+                                       // 카멜표기법으로 작성한 변수이름을 자동으로 찾아준다.
     
     @LastModifiedDate // update될 때의 시간이 자동으로 기록됨.
     private LocalDateTime modifiedTime;

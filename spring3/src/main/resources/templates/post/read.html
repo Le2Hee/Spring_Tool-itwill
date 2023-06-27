@@ -4,7 +4,36 @@
     layout:decorate="~{layout/base_layout}">
 
     <main layout:fragment="main">
-        <h1>포스트 목록 페이지</h1>
+        <div class="my-2 card">
+            <div class="card-header text-center">
+                <h1>포스트 목록 페이지</h1>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>수정시간</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="post : ${ posts }">
+                            <td th:text="${ post.id }"></td>
+                            <td>           <!-- {}안 쪽에 {}가 가능하며 id가 뭔지를 알려주기 위해 ()를 사용해서 값을 넣어준다. -->
+                                <a th:href="@{ /post/details?id={id} (id = ${post.id}) }" th:text="${ post.title }"></a>
+                            </td>
+                            <td th:text="${ post.author }"></td>
+                            <td th:text="${ #temporals.format(post.modifiedTime, 'yyyy-MM-dd HH:mm:ss') }"></td> 
+                            <!-- 타임리스를 사용할 땐 시간타입을 LocalDateTime으로 바로 사용해도 된다. -->
+                            <!-- #temporals.format(post.modifiedTime, 'yyyy-MM-dd HH:mm:ss')을 사용해서 출력형태 변경. -->
+                            <!-- # : 문서관련 메서드 호출할때 사용. -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
     
 </html>

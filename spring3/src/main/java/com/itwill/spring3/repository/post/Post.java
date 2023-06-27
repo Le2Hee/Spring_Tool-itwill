@@ -1,5 +1,6 @@
 package com.itwill.spring3.repository.post;
 
+import com.itwill.spring3.dto.PostUpdateDto;
 import com.itwill.spring3.repository.BaseTimeEntity;
 
 import jakarta.persistence.Column;
@@ -45,5 +46,14 @@ public class Post extends BaseTimeEntity {
     private String author;
     
     // created_time, modified_time 은 BaseTimeEntity에 상속받을 것이다.
+    
+    // Post 엔터티의 title과 content를 수정해서 리턴하는 메서드: (반드시 리턴까지 해야된다.)
+    public Post update(PostUpdateDto dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        // Setter메서드 2개를 update() 하나로 대체하겠다.
+        
+        return this; // 바꾼 값을 그대로 리턴하겠다.
+    }
     
 }

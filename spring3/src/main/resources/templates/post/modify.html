@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="htt://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/base_layout}">
+
+    <main layout:fragment="main">
+        <div class="my-2 card">
+            <div calss="card-header text-center">
+                <h1>포스트 수정 페이지</h1>
+            </div>
+            <div calss="card-body">
+                <form id="postModifyForm">
+                    <div class="my-2">
+                        <label class="form-label" for="id">번호</label>
+                        <input class="form-control" id="id" name="id" th:value="${ post.id }" readonly />
+                    </div>
+                    <div class="my-2">
+                        <lable class="form-label" for="title">제목</lable>
+                        <input class="form-control" id="title" name="title" th:value="${ post.title }" />
+                        <!-- input은 값이 value로 가지고 있기 때문에 th:value를 사용한다. -->
+                    </div>
+                    <div class="my-2">
+                        <lable class="form-label"  for="content">내용</lable>
+                        <textarea class="form-control" id="content" name="content" th:text="${ post.content }" ></textarea>
+                        <!-- textarea는 중간에 text로 들어가기 때문에 th:text로 들어가야 한다. -->
+                    </div>
+                    <div class="my-2">
+                        <label class="form-label" for="author">작성자</label>
+                        <input class="form-control" id="author" th:value="${ post.author }" readonly />
+                    </div>
+                </form>
+                
+                <div>
+                    <button class="btn btn-outline-danger" id="btnDelete" >삭제</button>
+                    <button class="btn btn-outline-success" id="btnUpdate" >업데이트</button>
+                </div>
+                
+            </div>
+        </div>
+        
+        <th:block layout:fragment="myscripts">
+            <script src="/js/post/modify.js"></script>
+            <!-- spring boot 에서 static은 제외시키고 src를 작성한다. -> boot가 자동으로 찾아준다. -->
+        </th:block>
+                
+    </main>
+    
+</html>
