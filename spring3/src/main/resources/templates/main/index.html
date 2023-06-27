@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+                <!-- th로 시작하는 접두사 네임스페이스 -->
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="htt://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/base_layout}">
+    <!-- layout:decorate는 fragment="main"을 들고 있는 파일을 찾아주기 위해서 -->
+
+<!-- main이라고 이름을 가지고 있는 layout:fragment에 이 태그가 들어갈 것이다. -->
+<main layout:fragment="main">
+    <!-- 타임리프 문법 (now -> controller에 model안에 넣어서 들고 온것.) -->
+    <h1 th:text="|현재 시간 : ${now}|">현재 시간</h1>
+    <!-- 실제로 text안에 있는 text는 사라지고 th:text가 나온다. -->
+</main>
+
+</html>
