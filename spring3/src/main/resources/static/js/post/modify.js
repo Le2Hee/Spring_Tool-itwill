@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // form 찾기
     const form = document.querySelector('form#postModifyForm');
     
-    // post id 찾기
-    const inputId = document.querySelector('input#id');
-    
     // post title 찾기
     const inputTitle = document.querySelector('input#title');
     
@@ -24,13 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // 삭제 버튼 찾기
     const btnDelete = document.querySelector('button#btnDelete');
     
+    // 수정 버튼 이벤트 등록
     btnUpdate.addEventListener('click', (e) => {
         e.preventDefault;
         
-        const id = inputId.value;
+        // 이벤트 리스너 밖에 있으면 그 전에 있던 값들로 저장이 된다.
         const title = inputTitle.value;
-        const content = textareaContent.innerHTML;
+        const content = textareaContent.value;
         
+        // 내용이 없으면 수정을 못하게 방지
         if (title === '' || content === '') {
             alert('제목과 내용은 반드시 입력해야 합니다.');
             return;
@@ -41,13 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result) {
             
             form.method = 'post';
-            form.action = `/post/modify`;
+            form.action = '/post/modify';
             form.submit();
         }
         
         
     });
     
+    // 삭제 버튼 이벤트 등록
     btnDelete.addEventListener('click', (e) => {
         e.preventDefault;
         

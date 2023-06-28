@@ -5,16 +5,17 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwill.spring3.dto.PostCreateDto;
+import com.itwill.spring3.dto.PostSearchDto;
 import com.itwill.spring3.dto.PostUpdateDto;
 import com.itwill.spring3.repository.post.Post;
+import com.itwill.spring3.repository.reply.Reply;
 import com.itwill.spring3.service.PostService;
+import com.itwill.spring3.service.ReplyService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PostController {
     
     private final PostService postService;
+    private final ReplyService replyService;
     
     @GetMapping
     public String read(Model model) {
@@ -70,7 +72,13 @@ public class PostController {
         Post post = postService.read(id);
         log.info("CONTROLLER read() post = {}", post);
         
-        // 결과를 model에 저장. -> 뷰로 전달
+        // REPLIES 테이블에서 해당 포스터에 달린 댓글 개수를 검색.
+        List<Reply> replyList = replyService.read(post);
+        
+        // replyList 결과를 model에 저장.
+        model.addAttribute("replyCount", replyList.size());
+        
+        // post 결과를 model에 저장. -> 뷰로 전달
         model.addAttribute("post", post);
         
     }
@@ -79,8 +87,7 @@ public class PostController {
     public String modify(PostUpdateDto dto, @RequestParam Long id) {
         log.info("modify POST (dto = {})", dto);
         
-        Post post = postService.update(dto, id);
-        log.info("post = {}", post);
+        postService.update(dto, id);
         
         return "redirect:/post/details?id=" + id;
     }
@@ -93,5 +100,17 @@ public class PostController {
         
         return "redirect:/post";
     }
+    
+    @GetMapping("/search")
+    public String search(PostSearchDto dto, Model model) {
+        log.info("search(dto = {})", dto);
+        
+        List<Post> list = postService.search(dto);
+        
+        model.addAttribute("posts", list);
+        
+        return "/post/read";
+    }
+    
     
 }
