@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
     xmlns:layout="htt://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
@@ -34,10 +35,28 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/post/create}">새 포스트</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" >로그인</a>
-                        </li>
+                        </li><!-- sec:authentication="name" :  로그인한 username을 이렇게 표시를 한다. -->
+                        <th:block sec:authorize="isAuthenticated()" > <!-- 로그인이 되어 있으면 true를 리턴 -->
+                            <li class="nav-item">
+                                <!-- 인증된 사용자이면 (로그인 상태이면) -->
+                                <span class="nav-link" sec:authentication="name"></span>
+                            </li>
+                            <li class="nav-item">
+                                <!-- spring에서 기본으로 주어지는 logout -->
+                                <a class="nav-link" th:href="@{/logout}">로그아웃</a> 
+                            </li>
+                        </th:block>
+                        
+                        <!-- 익명 사용자이면 (로그인이 안된 상태이면) -->
+                        <th:block sec:authorize="isAnonymous()"> <!-- 로그인 안된 상태이면 -->
+                            <li class="nav-item">
+                                <!-- spring에서 기본으로 주어지는 login -->
+                                <a class="nav-link" th:href="@{/login}">로그인</a> 
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" >회원가입</a> 
+                            </li>
+                        </th:block>
                     </ul>
                 </div>
             </div>

@@ -1,5 +1,7 @@
 package com.itwill.spring3.repository.reply;
 
+import com.itwill.spring3.dto.PostUpdateDto;
+import com.itwill.spring3.dto.reply.ReplyUpdateDto;
 import com.itwill.spring3.repository.BaseTimeEntity;
 import com.itwill.spring3.repository.post.Post;
 
@@ -12,12 +14,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
 @ToString(exclude = {"post"}) // 필수 x, debuging을 위해서.
                               // exclude = {"post"} 옵션을 주면 post라는 걸 제외하고 toString을 만들어 준다. (exclude = 제외하다.)
                               // Lombok의 기능.
@@ -49,6 +56,12 @@ public class Reply extends BaseTimeEntity { // 상속을 받아 modifiedTime과 
     
     @Column(nullable = false) // not null
     private String writer; // 댓글 작성자
+    
+    public Reply update(ReplyUpdateDto dto) {
+        this.replyText = dto.getReplyText();
+        
+        return this;
+    }
     
 }
 

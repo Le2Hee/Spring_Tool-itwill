@@ -2,6 +2,7 @@ package com.itwill.spring3.web;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,6 @@ import com.itwill.spring3.dto.PostCreateDto;
 import com.itwill.spring3.dto.PostSearchDto;
 import com.itwill.spring3.dto.PostUpdateDto;
 import com.itwill.spring3.repository.post.Post;
-import com.itwill.spring3.repository.reply.Reply;
 import com.itwill.spring3.service.PostService;
 import com.itwill.spring3.service.ReplyService;
 
@@ -42,11 +42,15 @@ public class PostController {
         return "/post/read";
     }
     
+    @PreAuthorize("hasRole('USER')") // Security 접근 권한 설정. (메서드 그대로 문자열을 넣어준다.)
+                                     // Authorize : 인증하겠다. , Pre : 이전 (post : 이후)
+                                     // 페이지 접근 이전에 인증(권한, 로그인) 여부를 확인 하겠다.
     @GetMapping("/create")
     public void create() {
         log.info("create() GET");
     }
     
+    @PreAuthorize("hasRole('USER')") // 페이지 접근 이전에 인증(권한, 로그인) 여부를 확인 하겠다.
     @PostMapping("/create")
     public String create(PostCreateDto dto) { // form에서 submit된걸 Dispatcher-Servlet(디스패처 서블릿)이 dto로 만들어준다.
         log.info("create(dto = {}) POST", dto);
@@ -64,7 +68,8 @@ public class PostController {
     // 뷰의 이름은 요청 주소오 같다.
     // details -> detail.html, modify -> modify.html
     @GetMapping({"/details", "/modify"}) // 쿼리 String은 주소에 사용하지 않는다.
-                                // GetMapping() 안에 {}(배열)로 선언하면 하나의 GetMapping을 이용해 2개의 요청방식을 사용할 수 있다.
+                             // GetMapping() 안에 {}(배열)로 선언하면 하나의 GetMapping을 이용해 2개의 요청방식을 사용할 수 있다.
+    @PreAuthorize("hasRole('USER')") // 페이지 접근 이전에 인증(권한, 로그인) 여부를 확인 하겠다.
     public void read(Long id, Model model) { // html에서 @RequestParam으로 보낸 변수 이름이 같으면 자동으로 채워준다.
         log.info("read(id = {})", id);
         
@@ -73,16 +78,17 @@ public class PostController {
         log.info("CONTROLLER read() post = {}", post);
         
         // REPLIES 테이블에서 해당 포스터에 달린 댓글 개수를 검색.
-        List<Reply> replyList = replyService.read(post);
+        Long count = replyService.countByPost(post);
         
         // replyList 결과를 model에 저장.
-        model.addAttribute("replyCount", replyList.size());
+        model.addAttribute("replyCount", count);
         
         // post 결과를 model에 저장. -> 뷰로 전달
         model.addAttribute("post", post);
         
     }
     
+    @PreAuthorize("hasRole('USER')") // 페이지 접근 이전에 인증(권한, 로그인) 여부를 확인 하겠다.
     @PostMapping("/modify")
     public String modify(PostUpdateDto dto, @RequestParam Long id) {
         log.info("modify POST (dto = {})", dto);
@@ -92,6 +98,7 @@ public class PostController {
         return "redirect:/post/details?id=" + id;
     }
     
+    @PreAuthorize("hasRole('USER')") // 페이지 접근 이전에 인증(권한, 로그인) 여부를 확인 하겠다.
     @GetMapping("/delete")
     public String delete(@RequestParam Long id) {
         log.info("delete(id = {})", id);

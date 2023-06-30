@@ -51,11 +51,30 @@
             <div class="card-header">
                 <span>댓글</span>
                 <span id="replyCount" th:text="${ replyCount }"></span>개
-                <button class="btn" id="btnToggleReply" >댓글보기</button>
+                <button class="btn btn-outline-dark" id="btnToggleReply" >보이기</button>
             </div>
-            <div class="card-body">
+            <div class="card-body collapse" id="replyToggleDiv" >
+                <div class="my-2 row" >
+                    <div class="col-10">
+                        <textarea class="form-control" id="replyText" placeholder="댓글 내용 입력"></textarea>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-outline-success form-control" id="btnReplyCreate">등록</button>
+                    </div>
+                </div>
+                
+                <!-- 댓글 목록을 보여줄 영역 -->
+                <div class="my-2 row" id="replies"></div>
+                
             </div>
         </div>
     </main>
+    
+    <th:block layout:fragment="myscripts">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" ></script>
+        <!-- axios-http.com에서 Getting Started에서 Using jsDelivr CDN 부분 복사 -->
+        <script src="/js/reply/reply.js"></script>
+        <!-- spring boot 에서 static은 제외시키고 src를 작성한다. -> boot가 자동으로 찾아준다. -->
+    </th:block>
     
 </html>

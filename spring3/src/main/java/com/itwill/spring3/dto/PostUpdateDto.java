@@ -1,7 +1,5 @@
 package com.itwill.spring3.dto;
 
-import com.itwill.spring3.repository.post.Post;
-
 import lombok.Data;
 
 @Data
