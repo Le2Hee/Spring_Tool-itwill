@@ -30,6 +30,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(); // BCrypt : 암호화 하는 알고리즘 중에 하나이다.
     }
     
+    /*
     // 로그인 할때 사용할 임시 사용자
     // DB에 저장되어 있는 것이 아니라 단순히 메모리에 임시 저장되는 사용자.)
     @Bean
@@ -59,6 +60,7 @@ public class SecurityConfig {
         
         return new InMemoryUserDetailsManager(user1, user2, user3); 
     }
+    */
     
     // Security Filter 설정 bean :
     // 로그인과 로그아웃 설정
@@ -119,3 +121,5 @@ public class SecurityConfig {
 // SecurityFilterChain 환경설정을 해버리면 사이트를 들어갈때 로그인을 바로 안들어가지고, 메서드 안에서 환경설정을 해줘야 한다.
 // -> 권한에 대한 환경설정
 
+// Tomcat은 다른말로 servlet 컨테이너라고도 한다.
+// 컨테이너라는 개념은 객체들을 생성할 수 있는 프로그램, 객체들을 사용할 수 있는 프로그램.

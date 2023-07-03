@@ -3,10 +3,7 @@ package com.itwill.spring3.repository.reply;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import com.itwill.spring3.dto.reply.ReplyUpdateDto;
 import com.itwill.spring3.repository.post.Post;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long>{

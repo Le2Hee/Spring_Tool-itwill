@@ -18,9 +18,9 @@
                         <label class="form-label" for="content">내용</label>
                         <textarea class="form-control" id="content" name="content" required></textarea>
                     </div>
-                    <div class="my-2">
+                    <div class="d-none">
                         <label class="form-label" for="author">작성자</label>
-                        <input class="form-control" type="text" id="author" name="author" required />
+                        <input class="form-control" type="text" id="author" name="author" th:value="${ #authentication.name }" required />
                     </div>
                     <div class="my-2">
                         <input class="form-control btn btn-outline-success" type="submit" value="작성 완료" />

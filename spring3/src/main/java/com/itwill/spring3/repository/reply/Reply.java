@@ -1,6 +1,5 @@
 package com.itwill.spring3.repository.reply;
 
-import com.itwill.spring3.dto.PostUpdateDto;
 import com.itwill.spring3.dto.reply.ReplyUpdateDto;
 import com.itwill.spring3.repository.BaseTimeEntity;
 import com.itwill.spring3.repository.post.Post;
@@ -18,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
